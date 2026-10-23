@@ -1,0 +1,59 @@
+.severity-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px !important;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+  transition: all 0.15s ease;
+  box-shadow: none;
+}
+
+.severity-card:hover {
+  border-color: var(--border-strong);
+  transform: none;
+}
+
+.severity-card.critical {
+  border-bottom: 3px solid #DC2626;
+}
+.severity-card.critical .severity-num {
+  color: #DC2626;
+}
+
+.severity-card.major {
+  border-bottom: 3px solid #D97706;
+}
+.severity-card.major .severity-num {
+  color: #D97706;
+}
+
+.severity-card.minor {
+  border-bottom: 3px solid var(--primary);
+}
+.severity-card.minor .severity-num {
+  color: var(--primary);
+}
+
+.severity-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.severity-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.2px;
+}
+
+.severity-sub {
+  font-size: 9.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

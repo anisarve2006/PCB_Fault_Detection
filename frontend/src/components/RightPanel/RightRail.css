@@ -1,0 +1,51 @@
+/* Docked Right Boundary Rail */
+.right-boundary-rail {
+  width: 42px;
+  background: #FFFFFF;
+  border-left: 1px solid var(--border-subtle, #E0E0E0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  gap: 8px;
+  flex-shrink: 0;
+  user-select: none;
+  z-index: 10;
+}
+
+.right-boundary-rail .rail-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted, #5F6368);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0px !important;
+  transition: all 0.15s ease;
+}
+
+.right-boundary-rail .rail-btn:hover {
+  background: var(--bg-surface, #F8F9FA);
+  border-color: var(--border-subtle, #E0E0E0);
+  color: var(--primary, #188038);
+}
+
+.right-boundary-rail .rail-expand-btn {
+  color: var(--primary, #188038);
+}
+
+.right-boundary-rail .rail-expand-btn:hover {
+  background: var(--primary-light, #E6F4EA);
+  border-color: var(--primary, #188038);
+  color: var(--primary-hover, #137333);
+}
+
+.right-boundary-rail .rail-divider {
+  width: 24px;
+  height: 1px;
+  background: var(--border-subtle, #E0E0E0);
+  margin: 2px 0 4px 0;
+}

@@ -1,0 +1,22 @@
+.model-selector-container {
+  width: 100%;
+}
+
+.google-select {
+  width: 100%;
+  height: 32px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle, #E0E0E0);
+  color: var(--text-primary, #202124);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 0 8px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0px !important;
+  transition: border-color 0.15s ease;
+}
+
+.google-select:focus {
+  border-color: var(--primary, #188038);
+}

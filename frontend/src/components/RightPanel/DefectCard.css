@@ -1,0 +1,92 @@
+.defect-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--defect-color, #16A34A);
+  border-radius: 0px !important;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: none;
+}
+
+.defect-card:hover {
+  background: #F8FAFC;
+  border-color: var(--border-strong);
+}
+
+.defect-card.selected {
+  background: #F0FDF4;
+  border-color: #16A34A;
+  border-left: 3px solid var(--defect-color, #16A34A);
+}
+
+.defect-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.defect-card-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.defect-card-conf {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 1px 5px;
+  border-radius: 0px !important;
+}
+
+.defect-diag-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px !important;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10.5px;
+}
+
+.diag-lbl {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.diag-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #16A34A;
+}
+
+.defect-dims-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px 6px;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.dim-item strong {
+  color: var(--text-primary);
+}
+
+.defect-ipc-rule {
+  font-size: 9.5px;
+  color: #D97706;
+  line-height: 1.25;
+  font-family: var(--font-mono);
+}

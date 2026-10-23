@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: pcbvision-backend
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: Dockerfile
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8000

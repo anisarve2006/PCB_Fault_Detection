@@ -6,19 +6,21 @@ Usage:
 """
 
 import argparse
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 # Add project root to path
 ROOT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT_DIR))
 
-import os
-import tempfile
-os.makedirs("Z:\\tmp", exist_ok=True)
-os.environ["TEMP"] = "Z:\\tmp"
-os.environ["TMP"] = "Z:\\tmp"
-tempfile.tempdir = "Z:\\tmp"
+if os.path.exists("Z:\\"):
+    os.makedirs("Z:\\tmp", exist_ok=True)
+    os.environ["TEMP"] = "Z:\\tmp"
+    os.environ["TMP"] = "Z:\\tmp"
+    tempfile.tempdir = "Z:\\tmp"
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PCB Defect Detection & Measurement AOI Web Application")

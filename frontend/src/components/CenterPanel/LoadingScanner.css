@@ -1,0 +1,54 @@
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 50;
+  animation: fadeInScanner 0.15s ease;
+}
+
+@keyframes fadeInScanner {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.scanner-laser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), #86EFAC, transparent);
+  animation: scanLaser 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes scanLaser {
+  0% { top: 0%; opacity: 0.9; }
+  100% { top: 100%; opacity: 0.9; }
+}
+
+.scanner-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #E2E8F0;
+  border-top-color: var(--primary);
+  border-radius: 0px !important;
+  animation: spin 0.8s linear infinite;
+  box-shadow: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}

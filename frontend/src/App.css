@@ -1,0 +1,17 @@
+/* Main Industrial Workspace Grid */
+.workspace-grid {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 54px);
+  overflow: hidden;
+  position: relative;
+  background: #FFFFFF;
+}
+
+@media (max-width: 1200px) {
+  .workspace-grid {
+    flex-direction: column;
+    overflow-y: auto;
+    height: auto;
+  }
+}

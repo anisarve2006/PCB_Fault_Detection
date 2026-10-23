@@ -1,0 +1,70 @@
+.google-verdict-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle, #E0E0E0);
+  background: #FFFFFF;
+}
+
+.google-verdict-box.reject {
+  border-left: 4px solid var(--color-critical, #D93025);
+}
+
+.google-verdict-box.pass {
+  border-left: 4px solid var(--primary, #188038);
+}
+
+.verdict-icon-reject {
+  width: 20px;
+  height: 20px;
+  background: var(--color-critical, #D93025);
+  color: #FFFFFF;
+  border-radius: 50% !important; /* circular icon indicator inside square container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.verdict-icon-pass {
+  width: 20px;
+  height: 20px;
+  background: var(--primary, #188038);
+  color: #FFFFFF;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.verdict-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.google-verdict-box.reject .verdict-status-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-critical, #D93025);
+}
+
+.google-verdict-box.pass .verdict-status-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary, #188038);
+}
+
+.verdict-status-desc {
+  font-size: 10.5px;
+  color: var(--text-muted, #5F6368);
+  line-height: 1.35;
+}

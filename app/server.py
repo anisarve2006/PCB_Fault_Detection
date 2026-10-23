@@ -12,12 +12,18 @@ import time
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
-# Ensure all temporary spooling/uploads go to Z:\tmp because C:\ has 0 bytes free
-os.makedirs("Z:\\tmp", exist_ok=True)
-os.environ["TEMP"] = "Z:\\tmp"
-os.environ["TMP"] = "Z:\\tmp"
-os.environ["YOLO_CONFIG_DIR"] = "Z:\\ultralytics_config"
-tempfile.tempdir = "Z:\\tmp"
+# Ensure all temporary spooling/uploads go to Z:\tmp if Z: drive exists, else /tmp for Linux/Docker
+if os.path.exists("Z:\\"):
+    os.makedirs("Z:\\tmp", exist_ok=True)
+    os.environ["TEMP"] = "Z:\\tmp"
+    os.environ["TMP"] = "Z:\\tmp"
+    os.environ["YOLO_CONFIG_DIR"] = "Z:\\ultralytics_config"
+    tempfile.tempdir = "Z:\\tmp"
+else:
+    # Linux / Docker container / Render environment
+    os.makedirs("/tmp/ultralytics_config", exist_ok=True)
+    os.environ.setdefault("YOLO_CONFIG_DIR", "/tmp/ultralytics_config")
+
 
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
@@ -32,7 +38,24 @@ STATIC_DIR = BASE_DIR / "app" / "static"
 DATASET_DIR = BASE_DIR / "dataset"
 RUNS_DIR = BASE_DIR / "runs" / "incremental_training"
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="PCBVision AOI System", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/healthz")
+def healthz():
+    """Health check endpoint for Render, Docker, and uptime monitoring."""
+    return {"status": "ok", "service": "PCBVision AOI Server"}
+
 
 # Cached models dictionary
 LOADED_MODELS: Dict[str, YOLO] = {}
@@ -445,13 +468,22 @@ async def detect_pcb(
         "detections": detections
     }
 
-# Mount static files
+# Mount React build or fallback static files
+REACT_DIST_DIR = BASE_DIR / "frontend" / "dist"
+
+if REACT_DIST_DIR.exists() and (REACT_DIST_DIR / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=str(REACT_DIST_DIR / "assets")), name="react-assets")
+
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 @app.get("/")
 def index():
-    index_file = STATIC_DIR / "index.html"
+    if REACT_DIST_DIR.exists() and (REACT_DIST_DIR / "index.html").exists():
+        index_file = REACT_DIST_DIR / "index.html"
+    else:
+        index_file = STATIC_DIR / "index.html"
     return HTMLResponse(content=index_file.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     import uvicorn

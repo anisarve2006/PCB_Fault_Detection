@@ -1,0 +1,60 @@
+/* Google-inspired Left Sidebar */
+.left-panel {
+  width: 320px;
+  min-width: 240px;
+  max-width: 550px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.left-panel-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle, #E0E0E0);
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.left-panel-section:last-child {
+  border-bottom: none;
+}
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title-label {
+  font-family: var(--font-main);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-primary, #202124);
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.btn-panel-collapse {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted, #5F6368);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0px !important;
+  transition: all 0.15s ease;
+}
+
+.btn-panel-collapse:hover {
+  background: var(--bg-surface, #F8F9FA);
+  border-color: var(--border-subtle, #E0E0E0);
+  color: var(--text-primary, #202124);
+}

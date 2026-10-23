@@ -1,0 +1,118 @@
+/* ==========================================================================
+   PCBVision AOI-7000 — Google-Inspired Clean Minimal Industrial Design System
+   Pure white background, #E0E0E0 dividers, #202124 dark-gray text,
+   Google Green (#188038) primary actions, and 0px border-radius globally.
+   ========================================================================== */
+
+:root {
+  /* Google Workspace Color Tokens */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FFFFFF;
+  --bg-surface: #F8F9FA;
+  --bg-surface-hover: #F1F3F4;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8F9FA;
+
+  /* Dividers & Borders */
+  --border-subtle: #E0E0E0;
+  --border-strong: #DADCE0;
+  --border-active: #188038;
+  --border-glow: none;
+
+  /* Google Green Primary */
+  --primary: #188038;
+  --primary-hover: #137333;
+  --primary-light: #E6F4EA;
+
+  /* Severity Semantic Colors */
+  --color-critical: #D93025; /* Google Red (Fatal) */
+  --color-major: #F2994A;    /* Amber (Major) */
+  --color-minor: #1A73E8;    /* Google Blue (Minor) */
+
+  /* Defect Class Colors */
+  --cls-short: #EA4335;
+  --cls-open: #EA4335;
+  --cls-missing: #FBBC04;
+  --cls-spur: #1A73E8;
+  --cls-copper: #FB8C00;
+  --cls-mouse: #5E35B1;
+
+  /* Typography */
+  --font-main: 'Google Sans', 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Roboto Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  --font-display: 'Google Sans', 'Roboto', 'Inter', sans-serif;
+
+  /* Text Colors */
+  --text-primary: #202124;
+  --text-secondary: #3C4043;
+  --text-muted: #5F6368;
+  --text-disabled: #80868B;
+  --text-accent: #188038;
+
+  /* Shadows — Minimal / Flat */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+/* Global 0px Border Radius & Clean Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0px !important;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.light-theme {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+/* Minimal Clean Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb {
+  background: #DADCE0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #BDC1C6;
+}
+
+/* Button & Input Base Resets */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border-radius: 0px !important;
+}
+
+button {
+  cursor: pointer;
+}

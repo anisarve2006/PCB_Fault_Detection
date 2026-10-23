@@ -1,0 +1,99 @@
+/* Google Workspace Toast Notification */
+.toast-container {
+  position: fixed;
+  bottom: 36px;
+  right: 24px;
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast-message {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle, #E0E0E0);
+  border-radius: 0px !important;
+  padding: 8px 12px 8px 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  color: var(--text-primary, #202124);
+  animation: slideInToast 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  max-width: 440px;
+}
+
+@keyframes slideInToast {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.toast-message.success {
+  border-left: 4px solid var(--primary, #188038);
+}
+
+.toast-message.error {
+  border-left: 4px solid var(--color-critical, #D93025);
+}
+
+.toast-message.warning {
+  border-left: 4px solid var(--color-major, #F2994A);
+}
+
+.toast-message.info {
+  border-left: 4px solid var(--color-minor, #1A73E8);
+}
+
+.toast-icon-box {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.toast-check-icon {
+  color: var(--primary, #188038);
+}
+
+.toast-err-icon {
+  color: var(--color-critical, #D93025);
+}
+
+.toast-warn-icon {
+  color: var(--color-major, #F2994A);
+}
+
+.toast-info-icon {
+  color: var(--color-minor, #1A73E8);
+}
+
+.toast-text-body {
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-primary, #202124);
+}
+
+.toast-dismiss-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #5F6368);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+  margin-left: auto;
+  border-radius: 0px !important;
+  transition: color 0.12s ease;
+}
+
+.toast-dismiss-btn:hover {
+  color: var(--text-primary, #202124);
+}

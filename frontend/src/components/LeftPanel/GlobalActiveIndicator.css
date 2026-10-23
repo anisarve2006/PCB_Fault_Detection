@@ -1,0 +1,68 @@
+.global-image-indicator {
+  margin-top: 10px;
+  background: var(--primary-light);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  border-radius: 0px !important;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.global-indicator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.global-indicator-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot-pulse {
+  width: 7px;
+  height: 7px;
+  background-color: var(--primary);
+  border-radius: 0px !important;
+}
+
+.global-indicator-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+}
+
+.btn-clear-global {
+  background: #FEE2E2;
+  border: 1px solid #FCA5A5;
+  color: #DC2626;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 0px !important;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-clear-global:hover {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+.global-indicator-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.global-indicator-tip {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}

@@ -1,0 +1,84 @@
+.calibration-controls-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calib-control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calib-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calib-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-primary, #202124);
+}
+
+.calib-val-green {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary, #188038);
+}
+
+.calib-inputs-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Google-Green Range Slider */
+.google-range-slider {
+  flex: 1;
+  height: 4px;
+  background: #E0E0E0;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.google-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--primary, #188038);
+  border: none;
+  cursor: pointer;
+  border-radius: 0px !important;
+}
+
+.google-range-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--primary, #188038);
+  border: none;
+  cursor: pointer;
+  border-radius: 0px !important;
+}
+
+/* Compact Square Number Box */
+.square-number-box {
+  width: 44px;
+  height: 28px;
+  border: 1px solid var(--border-subtle, #E0E0E0);
+  background: #FFFFFF;
+  color: var(--text-primary, #202124);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  border-radius: 0px !important;
+}
+
+.square-number-box:focus {
+  border-color: var(--primary, #188038);
+}

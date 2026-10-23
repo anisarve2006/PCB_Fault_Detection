@@ -1,0 +1,8 @@
+# PCBVision AOI Backend Dependencies for Render / Docker
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+ultralytics>=8.3.0
+pillow>=10.0.0
+pandas>=2.0.0
+numpy>=1.24.0

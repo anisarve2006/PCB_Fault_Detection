@@ -1,0 +1,15 @@
+.git
+.gitignore
+node_modules
+frontend/node_modules
+frontend/dist
+.venv
+__pycache__
+*.pyc
+*.ipynb
+*.bat
+Launch_In_Chrome.bat
+tests.txt
+extra.txt
+docs.txt
+runtime.txt

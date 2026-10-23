@@ -1,0 +1,116 @@
+/* Google-Inspired Draggable Panel Resizer */
+.panel-resizer {
+  width: 5px;
+  position: relative;
+  cursor: col-resize;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-left: 1px solid var(--border-subtle, #E0E0E0);
+  border-right: 1px solid var(--border-subtle, #E0E0E0);
+  user-select: none;
+  z-index: 15;
+  transition: background 0.12s ease, border-color 0.12s ease;
+  border-radius: 0px !important;
+}
+
+.panel-resizer-left {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.panel-resizer-right {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.resizer-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Grip handle affordance */
+.resizer-handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 7px;
+  padding: 8px 0;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle, #E0E0E0);
+  border-radius: 0px !important;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.resizer-pip {
+  width: 2px;
+  height: 2px;
+  background: #80868B;
+  border-radius: 0px !important;
+  display: block;
+}
+
+/* Hover State */
+.panel-resizer:hover {
+  background: #F8F9FA;
+  border-color: var(--primary, #188038);
+}
+
+.panel-resizer:hover .resizer-handle-grip {
+  opacity: 1;
+  border-color: var(--primary, #188038);
+  background: #FFFFFF;
+}
+
+.panel-resizer:hover .resizer-pip {
+  background: var(--primary, #188038);
+}
+
+/* Active Dragging State */
+.panel-resizer.is-active {
+  background: var(--primary-light, #E6F4EA);
+  border-color: var(--primary, #188038);
+}
+
+.panel-resizer.is-active .resizer-handle-grip {
+  opacity: 1;
+  border-color: var(--primary, #188038);
+  background: var(--primary, #188038);
+}
+
+.panel-resizer.is-active .resizer-pip {
+  background: #FFFFFF;
+}
+
+/* Global body cursor during panel resize */
+body.is-resizing-panel {
+  user-select: none !important;
+  cursor: col-resize !important;
+}
+
+body.is-resizing-panel * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+/* Mobile responsive fallback */
+@media (max-width: 1200px) {
+  .panel-resizer {
+    display: none !important;
+  }
+}
