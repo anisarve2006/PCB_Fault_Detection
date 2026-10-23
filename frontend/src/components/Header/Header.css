@@ -110,6 +110,69 @@
   }
 }
 
+/* Live Backend Health Pill */
+.telemetry-health-pill {
+  cursor: pointer !important;
+  border-radius: 0px !important;
+  position: relative;
+}
+
+.telemetry-health-pill:hover {
+  background: #F1F3F4 !important;
+  border-color: #DADCE0 !important;
+}
+
+.telemetry-dot.dot-online {
+  background: var(--primary, #188038);
+  box-shadow: 0 0 0 2px rgba(24, 128, 56, 0.25);
+  animation: telemetryPulse 2.8s infinite ease-in-out;
+}
+
+.telemetry-dot.dot-checking {
+  background: #F2994A;
+  box-shadow: 0 0 0 2px rgba(242, 153, 74, 0.3);
+  animation: telemetryPulseChecking 1.2s infinite ease-in-out;
+}
+
+.telemetry-dot.dot-offline {
+  background: #D93025;
+  box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.25);
+  animation: none;
+}
+
+@keyframes telemetryPulseChecking {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(242, 153, 74, 0.3);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(242, 153, 74, 0.15);
+    opacity: 0.7;
+  }
+}
+
+.health-txt-online {
+  color: var(--primary, #188038);
+  font-weight: 700;
+}
+
+.health-txt-checking {
+  color: #E37400;
+  font-weight: 600;
+}
+
+.health-txt-offline {
+  color: #D93025;
+  font-weight: 700;
+}
+
+.health-txt-latency {
+  font-size: 10px;
+  color: var(--text-muted, #5F6368);
+  font-family: var(--font-mono, monospace);
+  font-weight: 500;
+}
+
 .telemetry-text {
   display: flex;
   flex-direction: column;

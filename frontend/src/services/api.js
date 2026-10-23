@@ -8,6 +8,37 @@ const API_BASE = trimmedUrl
   ? (trimmedUrl.endsWith('/api') ? trimmedUrl : `${trimmedUrl}/api`)
   : '/api';
 
+export function getApiBaseUrl() {
+  return API_BASE;
+}
+
+export async function checkBackendHealth() {
+  const startTime = performance.now();
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch(`${API_BASE}/status`, { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const latencyMs = Math.round(performance.now() - startTime);
+    return {
+      status: 'online',
+      latencyMs,
+      data,
+      url: API_BASE,
+    };
+  } catch (err) {
+    return {
+      status: 'offline',
+      latencyMs: null,
+      error: err.name === 'AbortError' ? 'Timeout (6s)' : (err.message || 'Connection failed'),
+      url: API_BASE,
+    };
+  }
+}
+
 function handleFetchError(err) {
   const msg = err?.message || String(err);
   if (

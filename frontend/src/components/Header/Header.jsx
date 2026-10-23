@@ -3,7 +3,7 @@ import { useInspection } from '../../context/useInspection';
 import './Header.css';
 
 export default function Header() {
-  const { systemStatus, setIsBenchmarkOpen, exportCsv, scaleUmPerPx } = useInspection();
+  const { systemStatus, setIsBenchmarkOpen, exportCsv, scaleUmPerPx, backendHealth, checkHealth } = useInspection();
 
   const hwDesc = systemStatus?.hardware
     ? (systemStatus.hardware.includes('CPU') ? 'Intel i7 CPU' : systemStatus.hardware)
@@ -25,6 +25,36 @@ export default function Header() {
 
       {/* Middle Telemetry Row */}
       <div className="header-telemetry-row">
+        {/* Live Backend Connection Indicator */}
+        <div
+          className={`telemetry-pill telemetry-health-pill status-${backendHealth?.status || 'checking'}`}
+          onClick={() => checkHealth(true)}
+          title={`Backend Endpoint: ${backendHealth?.url || '/api'}\nStatus: ${(backendHealth?.status || 'checking').toUpperCase()}${backendHealth?.latencyMs ? ` (${backendHealth.latencyMs}ms latency)` : ''}${backendHealth?.error ? `\nError: ${backendHealth.error}` : ''}\nClick to re-ping connection`}
+        >
+          <span className={`telemetry-dot dot-${backendHealth?.status || 'checking'}`} />
+          <div className="telemetry-text">
+            <span className="telemetry-lbl">API Server</span>
+            <span className="telemetry-val">
+              {backendHealth?.status === 'online' && (
+                <>
+                  <span className="health-txt-online">Online</span>
+                  {backendHealth.latencyMs !== null && (
+                    <span className="health-txt-latency"> · {backendHealth.latencyMs}ms</span>
+                  )}
+                </>
+              )}
+              {backendHealth?.status === 'checking' && (
+                <span className="health-txt-checking">Connecting...</span>
+              )}
+              {backendHealth?.status === 'offline' && (
+                <span className="health-txt-offline">Offline ↺</span>
+              )}
+            </span>
+          </div>
+        </div>
+
+        <div className="telemetry-separator" />
+
         <div className="telemetry-pill" title="Compute Engine / Hardware Execution Acceleration">
           <span className="telemetry-dot" />
           <div className="telemetry-text">

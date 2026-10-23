@@ -1,5 +1,13 @@
 import React, { createContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { fetchSystemStatus, fetchSamples, getSampleImageUrl, fetchMetrics, runDetection } from '../services/api';
+import {
+  fetchSystemStatus,
+  fetchSamples,
+  getSampleImageUrl,
+  fetchMetrics,
+  runDetection,
+  getApiBaseUrl,
+  checkBackendHealth,
+} from '../services/api';
 import { TARGET_PATTERN_MAP, CLASS_COLORS } from '../constants/defectConstants';
 
 const InspectionContext = createContext(null);
@@ -7,6 +15,15 @@ const InspectionContext = createContext(null);
 export { TARGET_PATTERN_MAP, CLASS_COLORS };
 
 export function InspectionProvider({ children }) {
+  // Backend Connection Health State
+  const [backendHealth, setBackendHealth] = useState({
+    status: 'checking',
+    latencyMs: null,
+    url: getApiBaseUrl(),
+    error: null,
+    lastChecked: null,
+  });
+
   // System State
   const [systemStatus, setSystemStatus] = useState(null);
   const [samples, setSamples] = useState([]);
@@ -187,17 +204,43 @@ export function InspectionProvider({ children }) {
     img.src = getSampleImageUrl(sampleId);
   }, [isUserGlobalActive, userGlobalBlob, runInspection, showToast]);
 
-  // Initial Load of Status, Samples, Metrics
+  // Live Backend Health Check
+  const checkHealth = useCallback(async (notify = false) => {
+    setBackendHealth((prev) => ({
+      ...prev,
+      status: prev.status === 'online' ? 'online' : 'checking',
+    }));
+    const result = await checkBackendHealth();
+    setBackendHealth({
+      status: result.status,
+      latencyMs: result.latencyMs,
+      url: result.url,
+      error: result.error || null,
+      lastChecked: new Date(),
+    });
+
+    if (result.status === 'online' && result.data) {
+      setSystemStatus((prev) => prev || result.data);
+      if (notify) {
+        showToast(`Backend connection healthy (${result.latencyMs}ms)`, 'success');
+      }
+    } else if (result.status === 'offline' && notify) {
+      showToast(`Backend unreachable (${result.error || 'Server sleeping or offline'})`, 'error');
+    }
+    return result;
+  }, [showToast]);
+
+  // Initial Load of Status, Samples, Metrics & Auto-recovery Polling
   useEffect(() => {
     async function init() {
       try {
-        const [statusData, samplesData, metricsData] = await Promise.all([
-          fetchSystemStatus().catch(() => null),
+        const healthResult = await checkHealth();
+        const [samplesData, metricsData] = await Promise.all([
           fetchSamples().catch(() => []),
           fetchMetrics().catch(() => ({ stages: [] })),
         ]);
-        if (statusData) setSystemStatus(statusData);
-        if (samplesData) setSamples(samplesData);
+        if (healthResult?.data) setSystemStatus(healthResult.data);
+        if (samplesData && samplesData.length > 0) setSamples(samplesData);
         if (metricsData && metricsData.stages) setMetrics(metricsData.stages);
 
         if (samplesData && samplesData.length > 0) {
@@ -209,7 +252,14 @@ export function InspectionProvider({ children }) {
       }
     }
     init();
-  }, [selectSample]);
+
+    // Health check polling every 25 seconds (keeps Render warm or detects wake-up)
+    const interval = setInterval(() => {
+      checkHealth();
+    }, 25000);
+
+    return () => clearInterval(interval);
+  }, [selectSample, checkHealth]);
 
   // Load User File
   const loadUserFile = useCallback((file) => {
@@ -456,6 +506,8 @@ export function InspectionProvider({ children }) {
   }
 
   const value = {
+    backendHealth,
+    checkHealth,
     systemStatus,
     samples,
     metrics,
