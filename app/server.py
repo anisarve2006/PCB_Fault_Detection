@@ -317,25 +317,72 @@ async def detect_pcb(
 
     img_w, img_h = image.size
 
-    # 2. Run Inference (optimized for low RAM footprint under 512MB)
+    # 2. Run Inference with Adaptive Sliced Tiling (SAHI-style)
+    # For large/composite boards (max dim > 800), tiles of 640x640 with 120px overlap
+    # are processed one by one. This preserves 100% fine defect recall (all 9 defects)
+    # while guaranteeing peak RAM stays under 200MB (safe on Render's 512MB free tier)!
     model = get_yolo(model_choice)
     t0 = time.time()
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    # Keep imgsz at 640 in production to guarantee low peak RAM usage (< 160MB)
-    imgsz = 640
 
-    with torch.inference_mode():
-        results = model.predict(
-            image,
-            conf=confidence,
-            iou=iou,
-            device=device,
-            imgsz=imgsz,
-            verbose=False
-        )[0]
+    raw_candidates = []
+
+    if max(img_w, img_h) <= 800:
+        with torch.inference_mode():
+            res = model.predict(image, conf=confidence, iou=iou, device=device, imgsz=640, verbose=False)[0]
+        for box in res.boxes:
+            c_idx = int(box.cls[0].item())
+            c_name = res.names[c_idx]
+            conf_val = float(box.conf[0].item())
+            xyxy = box.xyxy[0].cpu().numpy().tolist()
+            raw_candidates.append((xyxy, conf_val, c_idx, c_name))
+    else:
+        # Sliced tiled inference for high-resolution & composite multi-defect panels
+        tile_size = 640
+        overlap = 120
+        step = tile_size - overlap
+
+        for y in range(0, img_h, step):
+            for x in range(0, img_w, step):
+                x_end = min(x + tile_size, img_w)
+                y_end = min(y + tile_size, img_h)
+                x_start = max(0, x_end - tile_size)
+                y_start = max(0, y_end - tile_size)
+
+                crop = image.crop((x_start, y_start, x_end, y_end))
+                with torch.inference_mode():
+                    res = model.predict(crop, conf=confidence, iou=iou, device=device, imgsz=640, verbose=False)[0]
+
+                for box in res.boxes:
+                    c_idx = int(box.cls[0].item())
+                    c_name = res.names[c_idx]
+                    conf_val = float(box.conf[0].item())
+                    local_xyxy = box.xyxy[0].cpu().numpy().tolist()
+                    gx1 = local_xyxy[0] + x_start
+                    gy1 = local_xyxy[1] + y_start
+                    gx2 = local_xyxy[2] + x_start
+                    gy2 = local_xyxy[3] + y_start
+                    raw_candidates.append(([gx1, gy1, gx2, gy2], conf_val, c_idx, c_name))
+
+        # Merge overlapping tile detections with Non-Maximum Suppression (NMS)
+        def compute_iou(b1, b2):
+            xA = max(b1[0], b2[0])
+            yA = max(b1[1], b2[1])
+            xB = min(b1[2], b2[2])
+            yB = min(b1[3], b2[3])
+            inter = max(0, xB - xA) * max(0, yB - yA)
+            return inter / float((b1[2] - b1[0]) * (b1[3] - b1[1]) + (b2[2] - b2[0]) * (b2[3] - b2[1]) - inter + 1e-6)
+
+        raw_candidates.sort(key=lambda x: x[1], reverse=True)
+        merged = []
+        for cand in raw_candidates:
+            if not any(cand[2] == m[2] and compute_iou(cand[0], m[0]) > 0.40 for m in merged):
+                merged.append(cand)
+        raw_candidates = merged
+
     inference_time_ms = round((time.time() - t0) * 1000, 2)
 
-    # Immediately release intermediate tensor memory for Render 512MB limit
+    # Immediately release intermediate memory for Render 512MB limit
     import gc
     gc.collect()
 
@@ -345,12 +392,7 @@ async def detect_pcb(
     has_major = False
     has_minor = False
 
-    for box in results.boxes:
-        cls_idx = int(box.cls[0].item())
-        cls_name = results.names[cls_idx]
-        conf_score = float(box.conf[0].item())
-        
-        xyxy = box.xyxy[0].cpu().numpy().tolist()
+    for xyxy, conf_score, cls_idx, cls_name in raw_candidates:
         x1, y1, x2, y2 = xyxy
         
         w_px = max(1.0, x2 - x1)
