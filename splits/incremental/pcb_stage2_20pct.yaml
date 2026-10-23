@@ -1,0 +1,13 @@
+# PCB Defect Detection - Stage 2 (20% Data)
+path: Z:/PCB fault Detection/Faulty PCB detection/Faulty PCB detection/dataset
+train: Z:/PCB fault Detection/Faulty PCB detection/Faulty PCB detection/splits/incremental/train_20pct.txt
+val: Z:/PCB fault Detection/Faulty PCB detection/Faulty PCB detection/splits/incremental/val.txt
+test: Z:/PCB fault Detection/Faulty PCB detection/Faulty PCB detection/splits/incremental/test.txt
+
+names:
+  0: mouse_bite
+  1: spur
+  2: missing_hole
+  3: short
+  4: open_circuit
+  5: spurious_copper

@@ -1,0 +1,13 @@
+# PCB Defect Detection - Stage 4 (40% Data)
+path: C:/Users/24102A0044/Downloads/Faulty PCB detection/pcb-defect-dataset
+train: C:/Users/24102A0044/Downloads/Faulty PCB detection/Faulty PCB detection/splits/incremental/train_40pct.txt
+val: C:/Users/24102A0044/Downloads/Faulty PCB detection/Faulty PCB detection/splits/incremental/val.txt
+test: C:/Users/24102A0044/Downloads/Faulty PCB detection/Faulty PCB detection/splits/incremental/test.txt
+
+names:
+  0: mouse_bite
+  1: spur
+  2: missing_hole
+  3: short
+  4: open_circuit
+  5: spurious_copper

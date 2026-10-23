@@ -1,0 +1,158 @@
+{
+  "dataset_split": "test",
+  "config_file": "Z:\\PCB fault Detection\\Faulty PCB detection\\Faulty PCB detection\\splits\\incremental\\pcb_stage_full.yaml",
+  "total_images_tested": [
+    131,
+    138,
+    145,
+    142,
+    128,
+    145
+  ],
+  "evaluation_time_sec": 22.19,
+  "hardware": "NVIDIA GeForce RTX 4090",
+  "latency_breakdown_ms": {
+    "preprocess": 0.69,
+    "inference": 1.35,
+    "loss": 0.0,
+    "postprocess": 0.54,
+    "total_latency_per_image": 2.58
+  },
+  "throughput_fps": 387.8,
+  "overall_metrics": {
+    "precision": 76.07,
+    "recall": 98.66,
+    "map50": 77.44,
+    "map50_95": 44.79,
+    "f1_mean": 85.88
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class_name": "mouse_bite",
+      "severity": "MINOR",
+      "precision": 78.21,
+      "recall": 99.24,
+      "f1_score": 87.48,
+      "map50": 78.28,
+      "map50_95": 45.36
+    },
+    {
+      "class_id": 1,
+      "class_name": "spur",
+      "severity": "MINOR",
+      "precision": 79.29,
+      "recall": 97.49,
+      "f1_score": 87.45,
+      "map50": 79.74,
+      "map50_95": 44.47
+    },
+    {
+      "class_id": 2,
+      "class_name": "missing_hole",
+      "severity": "MAJOR",
+      "precision": 73.04,
+      "recall": 99.65,
+      "f1_score": 84.3,
+      "map50": 74.73,
+      "map50_95": 46.15
+    },
+    {
+      "class_id": 3,
+      "class_name": "short",
+      "severity": "CRITICAL",
+      "precision": 74.62,
+      "recall": 98.91,
+      "f1_score": 85.07,
+      "map50": 74.75,
+      "map50_95": 45.16
+    },
+    {
+      "class_id": 4,
+      "class_name": "open_circuit",
+      "severity": "CRITICAL",
+      "precision": 76.99,
+      "recall": 99.73,
+      "f1_score": 86.89,
+      "map50": 79.29,
+      "map50_95": 43.45
+    },
+    {
+      "class_id": 5,
+      "class_name": "spurious_copper",
+      "severity": "MINOR",
+      "precision": 74.28,
+      "recall": 96.92,
+      "f1_score": 84.11,
+      "map50": 77.83,
+      "map50_95": 44.13
+    }
+  ],
+  "confusion_matrix_raw": [
+    [
+      262.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      460.0
+    ],
+    [
+      0.0,
+      278.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      512.0
+    ],
+    [
+      0.0,
+      0.0,
+      283.0,
+      0.0,
+      0.0,
+      0.0,
+      173.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      275.0,
+      0.0,
+      0.0,
+      659.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      265.0,
+      0.0,
+      340.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      297.0,
+      406.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ]
+  ],
+  "background_false_positives": 2,
+  "background_false_negatives": 2550
+}

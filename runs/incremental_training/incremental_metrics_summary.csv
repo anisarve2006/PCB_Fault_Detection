@@ -1,0 +1,6 @@
+Stage,Data_Percentage,Base_Weights,Train_Time_Min,mAP@50,mAP@50-95,Recall_mouse_bite,Recall_spur,Recall_missing_hole,Recall_short,Recall_open_circuit,Recall_spurious_copper
+1,10%,yolo11s.pt,187.69,0.7924,0.3296,0.5907,0.3042,1.0,0.7948,0.8051,0.9311
+2,20%,best.pt,304.27,0.9296,0.4442,0.8901,0.8553,1.0,0.9033,0.9115,0.9719
+3,30%,best.pt,418.07,0.9527,0.4726,0.928,0.8974,1.0,0.9552,0.923,0.9745
+4,60%,best.pt,3.85,0.9686,0.5093,0.956,0.9693,1.0,0.9437,0.9425,0.996
+5,100%,best.pt,8.3,0.9881,0.5844,0.9849,0.9775,0.9974,0.9836,0.9959,0.9768

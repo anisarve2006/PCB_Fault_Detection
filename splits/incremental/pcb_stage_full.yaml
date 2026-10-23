@@ -1,0 +1,13 @@
+# PCB Defect Detection - Full 100% Production Dataset
+path: Z:/PCB fault Detection/Faulty PCB detection/Faulty PCB detection/dataset/pcb-defect-dataset
+train: train/images
+val: val/images
+test: test/images
+
+names:
+  0: mouse_bite
+  1: spur
+  2: missing_hole
+  3: short
+  4: open_circuit
+  5: spurious_copper

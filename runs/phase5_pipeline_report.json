@@ -1,0 +1,62 @@
+{
+  "pipeline": "Phase 5 Champion YOLO11s Pipeline",
+  "timestamp": "2026-10-23T12:17:06Z",
+  "checkpoint": "Z:\\PCB fault Detection\\Faulty PCB detection\\Faulty PCB detection\\champion_weights.pt",
+  "test_dataset": "Z:\\PCB fault Detection\\Faulty PCB detection\\Faulty PCB detection\\splits\\incremental\\pcb_holdout_test.yaml",
+  "hardware": "NVIDIA GeForce RTX 4090",
+  "overall_metrics": {
+    "map50": 0.7376,
+    "map50_95": 0.4431,
+    "precision": 0.7265,
+    "recall": 0.9953,
+    "critical_recall": 0.9896
+  },
+  "class_breakdown": {
+    "mouse_bite": {
+      "recall": 0.9963,
+      "map50": 0.4384
+    },
+    "spur": {
+      "recall": 0.9961,
+      "map50": 0.4544
+    },
+    "missing_hole": {
+      "recall": 1.0,
+      "map50": 0.4655
+    },
+    "short": {
+      "recall": 0.9937,
+      "map50": 0.4406
+    },
+    "open_circuit": {
+      "recall": 0.9856,
+      "map50": 0.4115
+    },
+    "spurious_copper": {
+      "recall": 1.0,
+      "map50": 0.4482
+    }
+  },
+  "multi_defect_simultaneous_test": {
+    "total_defects": 9,
+    "distinct_classes_count": 6,
+    "distinct_classes": [
+      "missing_hole",
+      "mouse_bite",
+      "open_circuit",
+      "short",
+      "spur",
+      "spurious_copper"
+    ],
+    "class_breakdown": {
+      "missing_hole": 1,
+      "mouse_bite": 1,
+      "open_circuit": 2,
+      "short": 2,
+      "spur": 2,
+      "spurious_copper": 1
+    },
+    "latency_ms": 3104.67,
+    "all_6_classes_detected_concurrently": true
+  }
+}

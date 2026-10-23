@@ -1,0 +1,59 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# System & Safe Temporary Directories
+tmp/
+*.tmp
+*.log
+*.swp
+*~
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Raw Datasets (Re-generated on demand via data_pipeline_phase5.py)
+dataset/pcb-defect-dataset/
+dataset/raw/
+kagglehub_cache/
+pip_cache/
+*.tar.gz
+*.zip
+
+# Chrome Profile Data & Automation Cache
+chrome_user_data/
+chrome_cache/
+chrome_selenium_test_data/
+chrome_selenium_cache/
+
+# Intermediate Training Runs & Heavy Duplicate Weights
+runs/incremental_training/Stage_*/
+runs/incremental_training/train*/
+runs/pipeline_phase5/weights/last.pt
+runs/test_evaluation/
+runs/detect/
+champion_weights_stage4.pt
+champion_weights_stage5.pt
+yolo11s.pt
+weights/
+
+# Preserve Champion Model & Final Metrics
+!champion_weights.pt
+!runs/incremental_metrics_summary.csv
+!runs/phase5_pipeline_report.json
+!runs/test_evaluation_report.json
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.agents/
+
+# Jupyter Checkpoints
+.ipynb_checkpoints/
