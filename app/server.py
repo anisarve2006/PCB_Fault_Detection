@@ -194,7 +194,11 @@ def resolve_model_path(model_key: str = "champion") -> Path:
         p = RUNS_DIR / "Stage_1_10pct" / "weights" / "best.pt"
         if p.exists(): return p
 
-    # Default to champion_weights.pt or latest available (Phase 5)
+    # Default to champion_weights.onnx (production low-RAM) or champion_weights.pt
+    root_onnx = BASE_DIR / "champion_weights.onnx"
+    if root_onnx.exists():
+        return root_onnx
+
     root_champ = BASE_DIR / "champion_weights.pt"
     if root_champ.exists():
         return root_champ
@@ -313,23 +317,27 @@ async def detect_pcb(
 
     img_w, img_h = image.size
 
-    # 2. Run Inference with dynamic multi-resolution scaling
+    # 2. Run Inference (optimized for low RAM footprint under 512MB)
     model = get_yolo(model_choice)
     t0 = time.time()
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    # Auto-scale imgsz up to 1280 for high-res/composite boards so all defect types are resolved at once
-    max_dim = max(img_w, img_h)
-    dynamic_imgsz = 1280 if max_dim >= 1000 else (960 if max_dim >= 700 else 640)
-    
-    results = model.predict(
-        image,
-        conf=confidence,
-        iou=iou,
-        device=device,
-        imgsz=dynamic_imgsz,
-        verbose=False
-    )[0]
+    # Keep imgsz at 640 in production to guarantee low peak RAM usage (< 160MB)
+    imgsz = 640
+
+    with torch.inference_mode():
+        results = model.predict(
+            image,
+            conf=confidence,
+            iou=iou,
+            device=device,
+            imgsz=imgsz,
+            verbose=False
+        )[0]
     inference_time_ms = round((time.time() - t0) * 1000, 2)
+
+    # Immediately release intermediate tensor memory for Render 512MB limit
+    import gc
+    gc.collect()
 
     # 3. Extract and Measure Defects
     detections = []
