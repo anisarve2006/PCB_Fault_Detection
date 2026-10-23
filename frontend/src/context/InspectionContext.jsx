@@ -488,7 +488,17 @@ export function InspectionProvider({ children }) {
   let verdictDesc = 'No manufacturing non-conformances identified. Conductor geometry within IPC nominal specification.';
   let verdictColor = '#16A34A';
 
-  if (summary.critical_count > 0) {
+  if (isLoading) {
+    verdict = 'ANALYZING';
+    verdictBadge = 'SCANNING...';
+    verdictColor = '#1A73E8';
+    verdictDesc = loadingText || 'Executing optical inspection & micro-dimensional geometry measurements...';
+  } else if (!rawResult) {
+    verdict = 'PENDING';
+    verdictBadge = 'AWAITING SCAN';
+    verdictColor = '#5F6368';
+    verdictDesc = 'Click "Run AOI Inspection" to evaluate manufacturing conformance against IPC-A-610 standards.';
+  } else if (summary.critical_count > 0) {
     verdict = 'CRITICAL';
     verdictBadge = 'REJECT · CLASS 3';
     verdictColor = '#DC2626';
